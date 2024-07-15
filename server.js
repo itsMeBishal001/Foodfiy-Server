@@ -71,7 +71,7 @@ app.get('/api/menu', async (req, res) => {
         });
 });
 
-//offset fetching data from the specified URL
+// offset fetching data from the specified URL
 app.get('/api/restaurants/list/v5/offset', async (req, res) => {
     const { lat, lng, offset } = req.query;
     const REST_API_OFFSET_URL = "https://www.swiggy.com/dapi/restaurants/list/v5?sortBy=RELEVANCE&pageType=SEE_ALL&page_type=DESKTOP_SEE_ALL_LISTING";
