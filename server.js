@@ -71,6 +71,34 @@ app.get('/api/menu', async (req, res) => {
         });
 });
 
+//offset fetching data from the specified URL
+app.get('/api/restaurants/list/v5/offset', async (req, res) => {
+    const { lat, lng, offset } = req.query;
+    const REST_API_OFFSET_URL = "https://www.swiggy.com/dapi/restaurants/list/v5?sortBy=RELEVANCE&pageType=SEE_ALL&page_type=DESKTOP_SEE_ALL_LISTING";
+    const url = `${REST_API_OFFSET_URL}&lat=${lat}&lng=${lng}&offset=${offset}`;
+
+    await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            res.json(data);
+        })
+        .catch(error => {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        });
+});
 
 app.get('/', (req, res) => {
     res.json({ "test": "Welcome to FoodFire! - See Live Web URL for this Server - https://foodfire-app.netlify.app" });
